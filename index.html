@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Personalized Diwali Wish</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: radial-gradient(circle at top, #ffcc33, #ff9933, #330000);
+      color: #fff;
+      text-align: center;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .card {
+      background: rgba(255,255,255,0.1);
+      padding: 25px 35px;
+      border-radius: 20px;
+      box-shadow: 0 0 25px rgba(255,215,0,0.6);
+      max-width: 600px;
+      width: 90%;
+      z-index: 2;
+      position: relative;
+      border: 2px solid gold;
+      animation: glow 2s infinite alternate;
+    }
+    @keyframes glow {
+      0% { box-shadow: 0 0 15px gold; }
+      100% { box-shadow: 0 0 35px gold; }
+    }
+    input {
+      padding: 12px;
+      border-radius: 12px;
+      border: none;
+      outline: none;
+      width: 70%;
+      font-size: 16px;
+      margin-top: 12px;
+    }
+    button {
+      padding: 12px 22px;
+      border-radius: 12px;
+      border: none;
+      background: #ffcc33;
+      color: #330000;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 12px;
+      transition: transform 0.2s;
+    }
+    button:hover { transform: scale(1.05); }
+    .message {
+      margin-top: 22px;
+      font-size: 18px;
+      background: rgba(255,255,255,0.1);
+      padding: 18px;
+      border-radius: 12px;
+      line-height: 1.5;
+      text-align: left;
+      white-space: pre-wrap;
+    }
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .diyas {
+      position: absolute;
+      bottom: 10px;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+      z-index: 2;
+    }
+    .diya {
+      position: relative;
+      width: 40px;
+      height: 25px;
+      background: #5b2c00;
+      border-radius: 0 0 20px 20px;
+      box-shadow: 0 0 12px #ff9933;
+    }
+    .flame {
+      position: absolute;
+      top: -20px;
+      left: 50%;
+      width: 10px;
+      height: 20px;
+      background: radial-gradient(circle at 50% 20%, #fff7b0, #ff6600 70%, transparent 100%);
+      border-radius: 50%;
+      transform: translateX(-50%);
+      animation: flicker 0.15s infinite alternate;
+    }
+    @keyframes flicker {
+      from { transform: translateX(-50%) scaleY(1); opacity: 0.9; }
+      to { transform: translateX(-50%) scaleY(1.1); opacity: 0.6; }
+    }
+    .lantern {
+      position: absolute;
+      width: 15px;
+      height: 30px;
+      background: orange;
+      border-radius: 5px;
+      opacity: 0.8;
+      animation: floatLantern 6s linear infinite;
+    }
+    @keyframes floatLantern {
+      0% { transform: translateY(0) scale(1); opacity: 0.8; }
+      50% { transform: translateY(-200px) scale(1.1); opacity: 0.9; }
+      100% { transform: translateY(0) scale(1); opacity: 0.8; }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="fireworks"></canvas>
+  <div class="card">
+    <h1>✨ Personalized Diwali Wishes ✨</h1>
+    <input type="text" id="nameInput" placeholder="Enter your name" />
+    <br />
+    <button onclick="showWish()">Get Wish</button>
+    <div class="message" id="wishMsg" hidden></div>
+  </div>
+
+  <div class="diyas">
+    <div class="diya"><div class="flame"></div></div>
+    <div class="diya"><div class="flame"></div></div>
+    <div class="diya"><div class="flame"></div></div>
+    <div class="diya"><div class="flame"></div></div>
+  </div>
+
+  <script>
+    function capitalizeName(name) {
+      return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+    }
+
+    function showWish(){
+      const inputName = document.getElementById('nameInput').value.trim();
+      const msgBox = document.getElementById('wishMsg');
+      if(!inputName){
+        msgBox.hidden = false;
+        msgBox.innerText = 'Please enter a name first!';
+        return;
+      }
+      const name = capitalizeName(inputName);
+      let message = '';
+      const lowerName = inputName.toLowerCase();
+
+      if(lowerName === 'anuja' || lowerName === 'sakshi'){
+        message = `Happy Diwali Didi! 💛\nOn this auspicious occasion of Diwali, may your life be filled with joy, peace, and success.\nMay the divine light of Diwali always guide you toward happiness and prosperity! 🌼`;
+      } else if(lowerName === 'sahil'){
+        message = `Happy Diwali Bhaiya! 🙌\nWishing you strength, success, and endless happiness.\nMay your path shine bright like diyas and your dreams glow like fireworks! ✨`;
+      } else if(lowerName === 'kanishka' || lowerName === 'ruhani'){
+        message = `Happy Diwali meri pyari behan! 🩷\nMay your smile always shine brighter than the diyas and your life be full of laughter, love, and light! 🎇`;
+      } else if(lowerName === 'anvesha'){
+        message = `Happy Diwali, Anvesha! 🌸\nWishing you joy, peace, and success in everything you do.\nMay this Diwali bring you countless moments of happiness and beautiful memories. 💫`;
+      } else if(lowerName === 'anusha'){
+        message = `Happy Diwali, Anusha! 🌟\nStay cheerful and full of energy always!\nMay your Diwali sparkle with colors, sweets, and happiness all around! 🍬`;
+      } else if(lowerName === 'sanjay'){
+        message = `Happy Diwali Papa! 🎆\nMay your life be filled with peace, love, and good health.\nThank you for your constant support and guidance — you are my biggest light of inspiration! 🪔`;
+      } else if(lowerName === 'uday'){
+        message = `Happy Diwali Mama! 🪔\nWishing you health, happiness, and success always.\nMay your wisdom and kindness continue to brighten everyone’s life, just like the diyas on Diwali night! ✨`;
+      } else if(lowerName === 'arpit' || lowerName === 'siddhant'){
+        message = `Happy Diwali, my friend! 🎉\nMay your days shine brighter than fireworks and your nights be filled with peace and laughter.\nWishing you endless success, good health, and unforgettable memories this festive season! 🪔✨`;
+      } else {
+        message = `Happy Diwali ${name}! 🎆\nWishing you light, joy, and endless prosperity.\nMay every diya you light bring a new hope and every firework add happiness to your life. 🌠`;
+      }
+
+      message += `\n\nWith love, 💛\n— Arnav 💫`;
+
+      msgBox.hidden = false;
+      msgBox.innerText = message;
+      launchFireworks();
+      createLanterns();
+    }
+
+    // Fireworks animation
+    const canvas = document.getElementById('fireworks');
+    const ctx = canvas.getContext('2d');
+    let W = window.innerWidth;
+    let H = window.innerHeight;
+    canvas.width = W;
+    canvas.height = H;
+
+    window.addEventListener('resize', () => { W = window.innerWidth; H = window.innerHeight; canvas.width = W; canvas.height = H; });
+
+    const fireworks = [];
+
+    class Particle {
+      constructor(x, y, color, speed, angle) {
+        this.x = x; this.y = y; this.color = color;
+        this.speed = speed; this.angle = angle; this.alpha = 1;
+      }
+      update(){ this.x += Math.cos(this.angle)*this.speed; this.y += Math.sin(this.angle)*this.speed; this.alpha -= 0.02; }
+      draw(){ ctx.globalAlpha = this.alpha; ctx.fillStyle = this.color; ctx.beginPath(); ctx.arc(this.x,this.y,3,0,Math.PI*2); ctx.fill(); ctx.globalAlpha = 1; }
+    }
+
+    function launchFireworks(){
+      const colors = ['#ffcc33','#ff3366','#33ffcc','#ffffff','#ff6600'];
+      for(let i=0;i<5;i++){
+        const x=Math.random()*W, y=Math.random()*(H/2), color=colors[Math.floor(Math.random()*colors.length)];
+        for(let j=0;j<60;j++){
+          const angle=Math.random()*Math.PI*2, speed=Math.random()*5+2;
+          fireworks.push(new Particle(x,y,color,speed,angle));
+        }
+      }
+    }
+
+    function animate(){
+      requestAnimationFrame(animate);
+      ctx.fillStyle='rgba(0,0,0,0.2)';
+      ctx.fillRect(0,0,W,H);
+      for(let i=fireworks.length-1;i>=0;i--){
+        const p=fireworks[i]; p.update(); p.draw(); if(p.alpha<=0) fireworks.splice(i,1);
+      }
+    }
+
+    animate();
+
+    // Floating lanterns
+    function createLanterns(){
+      const existing = document.querySelectorAll('.lantern');
+      existing.forEach(e=>e.remove());
+      for(let i=0;i<5;i++){
+        const lantern=document.createElement('div');
+        lantern.classList.add('lantern');
+        lantern.style.left=Math.random()*100+'%';
+        lantern.style.animationDuration=4+Math.random()*4+'s';
+        document.body.appendChild(lantern);
+      }
+    }
+  </script>
+</body>
+</html>
